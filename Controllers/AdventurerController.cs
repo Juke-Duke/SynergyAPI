@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Synergy.API.Database;
@@ -15,51 +16,53 @@ public class AdventurerController : ControllerBase
         => _db = db;
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyCollection<Adventurer>>> GetAllAdventurers()
-        => Ok(await _db.Adventurers.ToListAsync());
+    public async Task<Response<IReadOnlyCollection<Adventurer>>> GetAllAdventurers()
+        => new(200, "OK - All registered adventurers", await _db.Adventurers.ToListAsync());
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Adventurer>> GetAdventurerById(int id)
+    public async Task<Response<Adventurer>> GetAdventurerById(int id)
     {
         var adventurerToRead = await _db.Adventurers.FindAsync();
 
-        return adventurerToRead is not null ? Ok(adventurerToRead) : NotFound();
+        return adventurerToRead is not null
+            ? new(200, $"OK - Adventurer with ID {id} found.", adventurerToRead)
+            : new(404, $"NotFound - Adventurer with ID {id} not found.", null);
     }
 
     [HttpPost]
-    public async Task<ActionResult<Adventurer>> CreateAdventurer(Adventurer adventurer)
+    public async Task<Response<Adventurer>> CreateAdventurer([FromBody] Adventurer adventurer)
     {
         await _db.Adventurers.AddAsync(adventurer);
         await _db.SaveChangesAsync();
 
-        return Created($"api/adventurer/{adventurer.Id}", adventurer);
+        return new(201, $"Created - Adventurer with ID {adventurer.Id} created.", adventurer);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Adventurer>> UpdateAdventurerById(int id, Adventurer adventurer)
+    public async Task<Response<Adventurer>> UpdateAdventurerById(int id, [FromBody] Adventurer adventurer)
     {
         var adventurerToUpdate = await _db.Adventurers.FindAsync(id);
 
         if (adventurerToUpdate is null)
-            return NotFound();
+            return new Response<Adventurer>(404, $"NotFound - Adventurer with ID {id} not found.", null);
 
-        _db.Adventurers.Update(adventurerToUpdate);
+        _db.Adventurers.Update(adventurer);
         await _db.SaveChangesAsync();
 
-        return Ok(adventurer);
+        return new(200, $"OK - Adventurer with ID {id} updated.", adventurer);
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Adventurer>> DeleteAdventureById(int id)
+    public async Task<Response<Adventurer>> DeleteAdventurerById(int id)
     {
         var adventurerToDelete = await _db.Adventurers.FindAsync(id);
 
         if (adventurerToDelete is null)
-            return NotFound();
+            return new Response<Adventurer>(404, $"NotFound - Adventurer with ID {id} not found.", null);
 
         _db.Adventurers.Remove(adventurerToDelete);
         await _db.SaveChangesAsync();
 
-        return Ok(adventurerToDelete);
+        return new(200, $"OK - Adventurer with ID {id} deleted.", adventurerToDelete);
     }
 }

@@ -1,2 +1,2 @@
 namespace Synergy.API;
-public sealed record Response(int StatusCode, string StatusDescription, )
+public sealed record Response<TData>(int StatusCode, string StatusDescription, TData? Data);
