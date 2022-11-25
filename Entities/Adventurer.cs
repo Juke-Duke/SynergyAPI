@@ -13,5 +13,5 @@ public sealed class Adventurer
 
     public Class Class { get; set; } = null!;
 
-    public Party Party { get; set; } = null!;
+    public Party? Party { get; set; }
 }
