@@ -3,15 +3,15 @@ using Synergy.API.Enums;
 namespace Synergy.API.Entities;
 public sealed class Adventurer
 {
-    public required int Id { get; set; }
+    public int Id { get; set; }
 
-    public required string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
-    public required Rank Rank { get; set; }
+    public Rank Rank { get; set; }
 
-    public required Race Race { get; set; }
+    public Race Race { get; set; } = null!;
 
-    public required Class Class { get; set; }
+    public Class Class { get; set; } = null!;
 
-    public required Party Party { get; set; }
+    public Party Party { get; set; } = null!;
 }

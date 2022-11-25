@@ -1,11 +1,11 @@
 namespace Synergy.API.Entities;
 public sealed class Party
 {
-    public required int Id { get; set; }
+    public int Id { get; set; }
 
-    public required string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
-    public required Adventurer Leader { get; set; }
+    public Adventurer Leader { get; set; } = null!;
 
-    public required DateTime DateFounded { get; set; }
+    public DateTime DateFounded { get; set; }
 }
