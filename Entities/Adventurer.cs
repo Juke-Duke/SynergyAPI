@@ -1,7 +1,7 @@
 using Synergy.API.Enums;
 
 namespace Synergy.API.Entities;
-public class Adventurer
+public sealed class Adventurer
 {
     public required int Id { get; set; }
 

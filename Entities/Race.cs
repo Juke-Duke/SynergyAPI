@@ -1,5 +1,5 @@
 namespace Synergy.API.Entities;
-public class Race
+public sealed class Race
 {
     public required int Id { get; set; }
 
