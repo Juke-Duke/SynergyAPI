@@ -25,4 +25,20 @@ public class SynergyDbContext : DbContext
             serverVersion: ServerVersion.AutoDetect(_configuration.GetConnectionString("SynergyDB"))
         );
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Adventurer>()
+            .HasOne(adventurer => adventurer.Party)
+            .WithMany(party => party.Members);
+
+        modelBuilder.Entity<Adventurer>()
+            .HasOne(adventurer => adventurer.Race);
+
+        modelBuilder.Entity<Adventurer>()
+            .HasOne(adventurer => adventurer.Class);
+
+        modelBuilder.Entity<Party>()
+            .HasOne(party => party.Leader);
+    }
 }

@@ -8,4 +8,6 @@ public sealed class Party
     public Adventurer Leader { get; set; } = null!;
 
     public DateTime DateFounded { get; set; }
+
+    public ICollection<Adventurer> Members { get; set; } = new List<Adventurer>();
 }
