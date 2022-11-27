@@ -6,6 +6,9 @@ public static class ClassSeed
 {
     public static void Seed(SynergyDbContext db)
     {
+        if (db.Classes.Any())
+            return;
+
         List<string[]> classes = new()
         {
             new[] { "Warrior", "Damage", "Fervor" },

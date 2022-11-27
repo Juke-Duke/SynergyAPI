@@ -18,11 +18,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var db = scope.ServiceProvider.GetRequiredService<SynergyDbContext>();
-//     RaceSeed.Seed(db);
-//     ClassSeed.Seed(db);
-// }
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<SynergyDbContext>();
+    RaceSeed.Seed(db);
+    ClassSeed.Seed(db);
+}
 
 app.Run();

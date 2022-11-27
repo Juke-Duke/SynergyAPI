@@ -5,6 +5,9 @@ public static class RaceSeed
 {
     public static void Seed(SynergyDbContext db)
     {
+        if (db.Races.Any())
+            return;
+
         List<string[]> races = new()
         {
             new[] { "Human", "Thundorum City" },
