@@ -17,12 +17,19 @@ namespace Synergy.API.Controllers
 
         [HttpGet]
         public async Task<Response<IReadOnlyCollection<Party>>> GetAllParties()
-            => new(200, "OK - All registered parties", await _db.Parties.ToListAsync());
-
+            => new(200, "OK - All registered parties", await _db.Parties.Include(party => party.Members)
+                                                                        .ThenInclude(member => member.Race)
+                                                                        .Include(party => party.Members)
+                                                                        .ThenInclude(member => member.Class)
+                                                                        .ToListAsync());
         [HttpGet("{id}")]
         public async Task<Response<Party>> GetPartyById(int id)
         {
-            var partyToRead = await _db.Parties.FindAsync(id);
+            var partyToRead = await _db.Parties.Include(party => party.Members)
+                                               .ThenInclude(member => member.Race)
+                                               .Include(party => party.Members)
+                                               .ThenInclude(member => member.Class)
+                                               .FirstOrDefaultAsync(party => party.Id == id);
 
             return partyToRead is not null
                 ? new(200, $"OK - Party with id {id} found.", partyToRead)
@@ -32,7 +39,7 @@ namespace Synergy.API.Controllers
         [HttpPost]
         public async Task<Response<Party>> CreatePartyByName([FromBody] UpsertPartyRequest request)
         {
-            var partyToCreate = new Party()
+            var partyToCreate = new Party
             {
                 Name = request.Name,
                 DateFounded = DateTime.Now
@@ -47,7 +54,11 @@ namespace Synergy.API.Controllers
         [HttpPut("{id}")]
         public async Task<Response<Party>> UpdatePartyById(int id, [FromBody] UpsertPartyRequest request)
         {
-            var partyToUpdate = await _db.Parties.FindAsync(id);
+            var partyToUpdate = await _db.Parties.Include(party => party.Members)
+                                                 .ThenInclude(member => member.Race)
+                                                 .Include(party => party.Members)
+                                                 .ThenInclude(member => member.Class)
+                                                 .FirstOrDefaultAsync(party => party.Id == id);
 
             if (partyToUpdate is null)
                 return new(404, $"NotFound - Party with id {id} not found.", null);
@@ -63,7 +74,11 @@ namespace Synergy.API.Controllers
         [HttpDelete("{id}")]
         public async Task<Response<Party>> DeletePartyById(int id)
         {
-            var partyToDelete = await _db.Parties.FindAsync(id);
+            var partyToDelete = await _db.Parties.Include(party => party.Members)
+                                                 .ThenInclude(member => member.Race)
+                                                 .Include(party => party.Members)
+                                                 .ThenInclude(member => member.Class)
+                                                 .FirstOrDefaultAsync(party => party.Id == id);
 
             if (partyToDelete is null)
                 return new(404, $"NotFound - Party with id {id} not found.", null);

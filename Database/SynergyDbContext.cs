@@ -19,12 +19,10 @@ public class SynergyDbContext : DbContext
         => _configuration = configuration;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseMySql(
+        => optionsBuilder.UseMySql(
             connectionString: _configuration.GetConnectionString("SynergyDB"),
             serverVersion: ServerVersion.AutoDetect(_configuration.GetConnectionString("SynergyDB"))
         );
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

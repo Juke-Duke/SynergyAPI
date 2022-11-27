@@ -20,6 +20,7 @@ public class AdventurerController : ControllerBase
         => new(200, "OK - All registered adventurers", await _db.Adventurers
                                                                 .Include(adventurer => adventurer.Race)
                                                                 .Include(adventurer => adventurer.Class)
+                                                                .Include(adventurer => adventurer.Party)
                                                                 .ToListAsync());
 
     [HttpGet("{id}")]
@@ -28,6 +29,7 @@ public class AdventurerController : ControllerBase
         var adventurerToRead = await _db.Adventurers
                                         .Include(adventurer => adventurer.Race)
                                         .Include(adventurer => adventurer.Class)
+                                        .Include(adventurer => adventurer.Party)
                                         .FirstOrDefaultAsync(adventurer => adventurer.Id == id);
 
         return adventurerToRead is not null
@@ -36,7 +38,7 @@ public class AdventurerController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<Response<Adventurer>> CreateAdventurer([FromBody] CreateAdventurerRequest request)
+    public async Task<Response<Adventurer>> CreateAdventurer([FromBody] UpsertAdventurerRequest request)
     {
         var adventurerRace = _db.Races.FirstOrDefault(race => race.Name == request.RaceName);
         var adventurerClass = _db.Classes.FirstOrDefault(@class => @class.Name == request.ClassName);
@@ -55,7 +57,7 @@ public class AdventurerController : ControllerBase
                 return new(404, $"NotFound - Party with Id {request.PartyId} not found.", null);
         }
 
-        var adventurerToCreate = new Adventurer()
+        var adventurerToCreate = new Adventurer
         {
             Name = request.Name,
             Rank = request.Rank,
@@ -71,7 +73,7 @@ public class AdventurerController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<Response<Adventurer>> UpdateAdventurerById(int id, [FromBody] UpdateAdventurerRequest request)
+    public async Task<Response<Adventurer>> UpdateAdventurerById(int id, [FromBody] UpsertAdventurerRequest request)
     {
         var adventurerToUpdate = await _db.Adventurers.FindAsync(id);
 
@@ -110,7 +112,10 @@ public class AdventurerController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<Response<Adventurer>> DeleteAdventurerById(int id)
     {
-        var adventurerToDelete = await _db.Adventurers.FindAsync(id);
+        var adventurerToDelete = await _db.Adventurers.Include(adventurer => adventurer.Race)
+                                                      .Include(adventurer => adventurer.Class)
+                                                      .Include(adventurer => adventurer.Party)
+                                                      .FirstOrDefaultAsync(adventurer => adventurer.Id == id);
 
         if (adventurerToDelete is null)
             return new Response<Adventurer>(404, $"NotFound - Adventurer with Id {id} not found.", null);

@@ -15,8 +15,8 @@ public static class ClassSeed
             new[] { "Marksman", "Damage", "Focus" },
             new[] { "Mage", "Damage", "Mana" },
             new[] { "Cleric", "Healer", "Faith" },
-            new[] { "Rogue", "Damage", "Energy" },
             new[] { "Paladin", "Tank", "Faith" },
+            new[] { "Rogue", "Damage", "Energy" },
             new[] { "Reaper", "Damage", "Soul" },
         };
 

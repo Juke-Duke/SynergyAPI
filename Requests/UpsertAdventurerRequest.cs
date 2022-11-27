@@ -1,7 +1,7 @@
 using Synergy.API.Enums;
 
 namespace Synergy.API.Requests;
-public sealed record CreateAdventurerRequest
+public sealed record UpsertAdventurerRequest
 (
     string Name,
     Rank Rank,
