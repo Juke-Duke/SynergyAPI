@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Synergy.API.Database;
 using Synergy.API.Entities;
+using Synergy.API.Requests;
 
 namespace Synergy.API.Controllers
 {
@@ -21,45 +22,37 @@ namespace Synergy.API.Controllers
         [HttpGet("{id}")]
         public async Task<Response<Party>> GetPartyById(int id)
         {
-            var partyToRead = await _db.Parties.FirstOrDefaultAsync(party => party.Id == id);
+            var partyToRead = await _db.Parties.FindAsync(id);
 
             return partyToRead is not null
                 ? new(200, $"OK - Party with id {id} found.", partyToRead)
                 : new(404, $"NotFound - Party with id {id} not found.", null);
         }
 
-        [HttpPost("{adventurerId}")]
-        public async Task<Response<Party>> CreateParty(int adventurerId, [FromBody] Party party)
+        [HttpPost]
+        public async Task<Response<Party>> CreatePartyByName([FromBody] UpsertPartyRequest request)
         {
-            var leader = await _db.Adventurers.FindAsync(adventurerId);
+            var partyToCreate = new Party()
+            {
+                Name = request.Name,
+                DateFounded = DateTime.Now
+            };
 
-            if (leader is null)
-                return new(404, $"NotFound - Adventurer with id {adventurerId} not found to be set as leader.", null);
-
-            party.Leader = leader;
-            party.DateFounded = DateTime.Now;
-
-            await _db.Parties.AddAsync(party);
+            await _db.Parties.AddAsync(partyToCreate);
             await _db.SaveChangesAsync();
 
-            return new(201, $"Created - Party with id {party.Id} created with adventurer {leader.Name} as leader.", party);
+            return new(201, $"Created - Party with name {request.Name} created.", partyToCreate);
         }
 
-        [HttpPut("{id}/{adventurerId}")]
-        public async Task<Response<Party>> UpdateParty(int id, int adventurerId, [FromBody] Party party)
+        [HttpPut("{id}")]
+        public async Task<Response<Party>> UpdatePartyById(int id, [FromBody] UpsertPartyRequest request)
         {
             var partyToUpdate = await _db.Parties.FindAsync(id);
 
             if (partyToUpdate is null)
                 return new(404, $"NotFound - Party with id {id} not found.", null);
 
-            var leader = await _db.Adventurers.FindAsync(adventurerId);
-
-            if (leader is null)
-                return new(404, $"NotFound - Adventurer with id {adventurerId} not found.", null);
-
-            if (partyToUpdate.Leader.Id != leader.Id)
-                return new(400, $"BadRequest - The leader Id given does not match the leader Id of the party.", null);
+            partyToUpdate.Name = request.Name;
 
             _db.Parties.Update(partyToUpdate);
             await _db.SaveChangesAsync();
@@ -67,21 +60,13 @@ namespace Synergy.API.Controllers
             return new(200, $"OK - Party with id {id} updated.", partyToUpdate);
         }
 
-        [HttpDelete("{id}/{adventurerId}")]
-        public async Task<Response<Party>> DeleteParty(int id, int adventurerId)
+        [HttpDelete("{id}")]
+        public async Task<Response<Party>> DeletePartyById(int id)
         {
             var partyToDelete = await _db.Parties.FindAsync(id);
 
             if (partyToDelete is null)
                 return new(404, $"NotFound - Party with id {id} not found.", null);
-
-            var leader = await _db.Adventurers.FindAsync(adventurerId);
-
-            if (leader is null)
-                return new(404, $"NotFound - Adventurer with id {adventurerId} not found.", null);
-
-            if (partyToDelete.Leader.Id != leader.Id)
-                return new(400, $"BadRequest - The leader Id given does not match the leader Id of the party.", null);
 
             _db.Parties.Remove(partyToDelete);
             await _db.SaveChangesAsync();

@@ -21,10 +21,10 @@ public class RaceController : ControllerBase
     [HttpGet("{name}")]
     public async Task<Response<Race>> GetRaceByName(string name)
     {
-        var raceToRead = await _db.Races.FirstOrDefaultAsync(rpgRace => rpgRace.Name == name);
+        var raceToRead = await _db.Races.FirstOrDefaultAsync(race => race.Name == name);
 
         return raceToRead is not null
             ? new(200, $"OK - Race with name {name} found.", raceToRead)
-            : new(404, $"NotFound - Race with name {name} not found.", null);
+            : new(404, $"NotFound - Race with name `{name}` not found.", null);
     }
 }

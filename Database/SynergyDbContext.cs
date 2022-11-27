@@ -29,16 +29,25 @@ public class SynergyDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Adventurer>()
+            .HasKey(adventurer => adventurer.Id);
+        modelBuilder.Entity<Adventurer>()
             .HasOne(adventurer => adventurer.Party)
             .WithMany(party => party.Members);
-
         modelBuilder.Entity<Adventurer>()
             .HasOne(adventurer => adventurer.Race);
-
         modelBuilder.Entity<Adventurer>()
             .HasOne(adventurer => adventurer.Class);
 
         modelBuilder.Entity<Party>()
-            .HasOne(party => party.Leader);
+            .HasKey(party => party.Id);
+        modelBuilder.Entity<Party>()
+            .HasMany(party => party.Members)
+            .WithOne(adventurer => adventurer.Party);
+
+        modelBuilder.Entity<Race>()
+            .HasKey(race => race.Id);
+
+        modelBuilder.Entity<Class>()
+            .HasKey(@class => @class.Id);
     }
 }

@@ -10,6 +10,4 @@ public sealed class Class
     public Role Role { get; set; }
 
     public Resource Resource { get; set; }
-
-    public string Abilities { get; set; } = string.Empty;
 }

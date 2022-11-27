@@ -21,7 +21,7 @@ public class ClassController : ControllerBase
     [HttpGet("{name}")]
     public async Task<Response<Class>> GetClassByName(string name)
     {
-        var classToRead = await _db.Classes.FirstOrDefaultAsync(rpgClass => rpgClass.Name == name);
+        var classToRead = await _db.Classes.FirstOrDefaultAsync(@class => @class.Name == name);
 
         return classToRead is not null
             ? new(200, $"OK - Class with name {name} found.", classToRead)
