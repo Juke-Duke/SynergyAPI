@@ -4,7 +4,8 @@ CREATE TABLE Races
 (
     Id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(255) NOT NULL,
-    Origin VARCHAR(255) NOT NULL
+    Origin VARCHAR(255) NOT NULL,
+    CONSTRAINT Name UNIQUE (Name)
 );
 
 CREATE TABLE Classes
@@ -12,7 +13,8 @@ CREATE TABLE Classes
     Id int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     Name VARCHAR(255) NOT NULL,
     Role ENUM("Tank", "Damage", "Healer") NOT NULL,
-    Resource ENUM("Fervor", "Focus", "Mana", "Faith", "Energy", "Soul") NOT NULL
+    Resource ENUM("Fervor", "Focus", "Mana", "Faith", "Energy", "Soul") NOT NULL,
+    CONSTRAINT Name UNIQUE (Name)
 );
 
 CREATE TABLE Adventurers
