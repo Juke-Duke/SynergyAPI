@@ -645,7 +645,8 @@ GET https://localhost:7000/api/race
         },
         {
             "id": 4,
-            "name": "Mist Elf", "Miswood Forest"
+            "name": "Mist Elf", 
+            "origin": "Miswood Forest"
         },
         {
             "id": 5,
