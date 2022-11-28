@@ -183,7 +183,7 @@ public enum Resource
 
 #### Get All Adventurers Endpoint
 ```http
-GET {host}/api/adventurer
+GET https://localhost:7000/api/adventurer
 ```
 
 #### Get All Adventurers Response
@@ -241,7 +241,7 @@ GET {host}/api/adventurer
 
 #### Get Adventurer By Id Endpoint
 ```http
-GET {host}/api/adventurer/{id}
+GET https://localhost:7000/api/adventurer/{id}
 ```
 
 #### Get Adventurer By Id Response
@@ -275,7 +275,7 @@ GET {host}/api/adventurer/{id}
 
 #### Create Adventurer Endpoint
 ```http
-POST {host}/api/adventurer
+POST https://localhost:7000/api/adventurer
 ```
 
 #### Create Adventurer Request
@@ -320,7 +320,7 @@ POST {host}/api/adventurer
 
 #### Update Adventurer By Id Endpoint
 ```http
-PUT {host}/api/adventurer/{id}
+PUT https://localhost:7000/api/adventurer/{id}
 ```
 
 #### Update Adventurer By Id Request
@@ -365,7 +365,7 @@ PUT {host}/api/adventurer/{id}
 
 #### Delete Adventurer By Id Endpoint
 ```http
-DELETE {host}/api/adventurer/{id}
+DELETE https://localhost:7000/api/adventurer/{id}
 ```
 
 #### Delete Adventurer By Id Response
@@ -409,7 +409,7 @@ DELETE {host}/api/adventurer/{id}
 
 #### Get All Parties Endpoint
 ```http
-GET {host}/api/party
+GET https://localhost:7000/api/party
 ```
 
 #### Get All Parties Response
@@ -503,7 +503,7 @@ GET {host}/api/party
 
 #### Get Party By Id Endpoint
 ```http
-GET {host}/api/party/{id}
+GET https://localhost:7000/api/party/{id}
 ```
 
 #### Get By Party By Id Response
@@ -539,7 +539,7 @@ GET {host}/api/party/{id}
 
 #### Create Party Endpoint
 ```http
-POST {host}/api/party
+POST https://localhost:7000/api/party
 ```
 
 #### Create Party Request
@@ -565,7 +565,7 @@ POST {host}/api/party
 
 #### Update Party By Id Endpoint
 ```http
-PUT {host}/api/party/{id}
+PUT https://localhost:7000/api/party/{id}
 ```
 
 #### Update Party By Id Request
@@ -591,7 +591,7 @@ PUT {host}/api/party/{id}
 
 #### Delete Party By Id Endpoint
 ```http
-DELETE {host}/api/party/{id}
+DELETE https://localhost:7000/api/party/{id}
 ```
 
 #### Delete Party By Id Response
@@ -619,7 +619,7 @@ DELETE {host}/api/party/{id}
 
 #### Get All Races Endpoint
 ```http
-GET {host}/api/race
+GET https://localhost:7000/api/race
 ```
 
 #### Get All Races Response
@@ -663,7 +663,7 @@ GET {host}/api/race
 
 #### Get Race By Name Endpoint
 ```http
-GET {host}/api/race/{name}
+GET https://localhost:7000/api/race/{name}
 ```
 
 #### Get Race By Name Response
@@ -691,7 +691,7 @@ GET {host}/api/race/{name}
 
 #### Get All Classes Endpoint
 ```http
-GET {host}/api/class
+GET https://localhost:7000/api/class
 ```
 
 #### Get All Classes Response
@@ -748,7 +748,7 @@ GET {host}/api/class
 
 #### Get Class By Name Endpoint
 ```http
-GET {host}/api/class/{name}
+GET https://localhost:7000/api/class/{name}
 ```
 
 #### Get Class By Name Response
