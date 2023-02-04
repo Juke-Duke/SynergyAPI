@@ -1,7 +1,7 @@
 # SynergyAPI
 
 <details>
-### Table of Contents
+    <summary markdown="span"><h1>Table of Contents</h1>
 - [SynergyAPI](#synergyapi)
     - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
@@ -50,6 +50,7 @@
       - [Get All Classes Response](#get-all-classes-response)
       - [Get Class By Name Endpoint](#get-class-by-name-endpoint)
       - [Get Class By Name Response](#get-class-by-name-response)
+    </summary>
 </details>
 
 ## Introduction
