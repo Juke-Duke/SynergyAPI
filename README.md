@@ -1,9 +1,6 @@
 # SynergyAPI
 
-<details>
-    <summary markdown="span"><h1>Table of Contents</h1>
 - [SynergyAPI](#synergyapi)
-    - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Getting Started](#getting-started)
     - [Setting Up The Database](#setting-up-the-database)
@@ -50,8 +47,6 @@
       - [Get All Classes Response](#get-all-classes-response)
       - [Get Class By Name Endpoint](#get-class-by-name-endpoint)
       - [Get Class By Name Response](#get-class-by-name-response)
-    </summary>
-</details>
 
 ## Introduction
 I’ve always loved the fantasy genre and this backend service representation really encapsulates a lot of my favorite aspects of the common role-playing tropes. One of the best things about rpgs is the interactions and experiences one shares with others, so making a service to connect adventurers would only add on to this positive effect.
